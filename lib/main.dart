@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:text_herring/edit_page.dart';
 import 'package:text_herring/speech_text.dart';
 
 void main() {
@@ -10,8 +11,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: SpeechText(),
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'Arial'),
+      home: EditPage(),
       debugShowCheckedModeBanner: false,
     );
   }
