@@ -26,11 +26,10 @@ class _SpeechTextState extends State<SpeechText> {
           });
 
           if (isListening) {
-            print("Listening...");
             var available = await speechToText.initialize();
             print(available);
             if (available) {
-              print("Listening...");
+              print("Listening....");
               setState(() {
                 speechToText.listen(onResult: (result) {
                   setState(() {
