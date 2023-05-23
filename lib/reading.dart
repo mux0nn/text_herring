@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:text_herring/colors.dart';
 
 String lorem = "Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, Igor nie jest zajebisty, ";
 class ReadSite extends HookWidget {
@@ -10,11 +11,11 @@ class ReadSite extends HookWidget {
     }); 
   @override
   Widget build(BuildContext context) {
-    final expanded=useState(false);
+    final expanded = useState(false);
     final animate = useState(false);
     final isListenig = useState(false);
     return Scaffold(
-     backgroundColor: Colors.white,
+     backgroundColor: white,
       extendBodyBehindAppBar: true,
      appBar: AppBar(
       backgroundColor: Colors.transparent,
@@ -29,7 +30,7 @@ class ReadSite extends HookWidget {
             width: double.infinity,
             height: 230,
             decoration: const BoxDecoration(
-              color: Color(0xFFFDA747),
+              color: primaryColor,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.elliptical(650, 300),
                 bottomRight: Radius.elliptical(650, 300),
@@ -44,8 +45,8 @@ class ReadSite extends HookWidget {
               animationDuration: 2000,
               lineHeight: 20.0,
               barRadius: const Radius.circular(20.0),
-              backgroundColor: Colors.white,
-              progressColor: Colors.white,
+              backgroundColor: white,
+              progressColor: white,
             )),
           Positioned(
             top:85,
@@ -56,8 +57,8 @@ class ReadSite extends HookWidget {
               lineHeight: 18.0,
               percent: 0.58,
               barRadius: const Radius.circular(20.0),
-              backgroundColor: Colors.white,
-              progressColor: const Color(0xFFFDA747),
+              backgroundColor: white,
+              progressColor: primaryColor,
             )),
             const Positioned(
               top: 120,
@@ -65,7 +66,7 @@ class ReadSite extends HookWidget {
               style: TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: white,
               ),
             )),
 
@@ -90,11 +91,11 @@ class ReadSite extends HookWidget {
             elevation: 8.0,
             shape: const CircleBorder(),
             child: CircleAvatar(
-            backgroundColor: Colors.white,
+            backgroundColor: white,
            radius: 30.0,
             child: Icon(
               isListenig.value ? Icons.mic_outlined: Icons.mic_off,
-              color: Color(0xFFFDA747),
+              color: primaryColor,
             size: 35,
             ),
                 ),
@@ -113,7 +114,7 @@ class ReadSite extends HookWidget {
                   height: expanded.value ? double.maxFinite:430.0,
                   padding:expanded.value ?const EdgeInsets.only(left:22, right:22, top: 35, bottom: 45):const EdgeInsets.only(left:16, right:16, top: 8, bottom: 30),
                   decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: white,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: const [
                     BoxShadow(
@@ -131,6 +132,7 @@ class ReadSite extends HookWidget {
                       textAlign: TextAlign.left,
                       
                       style: const TextStyle(
+                        color: textColor,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         wordSpacing: 3,
