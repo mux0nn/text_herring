@@ -112,10 +112,10 @@ class ReadSite extends HookWidget {
                  // maxHeight: expanded.value ? double.maxFinite:430.0),
                   width: expanded.value ? double.maxFinite:300.0,
                   height: expanded.value ? double.maxFinite:430.0,
-                  padding:expanded.value ?const EdgeInsets.only(left:22, right:22, top: 35, bottom: 45):const EdgeInsets.only(left:16, right:16, top: 8, bottom: 30),
+                  padding:expanded.value ?const EdgeInsets.only(left:22, right:22, top: 35, bottom: 5):const EdgeInsets.only(left:16, right:16, top: 8, bottom: 2),
                   decoration: BoxDecoration(
                   color: white,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: expanded.value ? null:BorderRadius.circular(20),
                   boxShadow: const [
                     BoxShadow(
                     color: Colors.grey,
@@ -124,49 +124,47 @@ class ReadSite extends HookWidget {
                     ),
                    ],
                   ),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                      child:
-                         Text(
-                      lorem,
-                      textAlign: TextAlign.left,
-                      
-                      style: const TextStyle(
-                        color: textColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        wordSpacing: 3,
-                        height: 1.4,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                            child:
+                               Text(
+                                      lorem,
+                                      textAlign: TextAlign.left,
+                                      
+                                      style: const TextStyle(
+                                      color: textColor,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      wordSpacing: 3,
+                                      height: 1.4,
+                                        ),
+                                        ),
+                          ),
                       ),
-                       ),
-                    ),
-              )
-         ),
-
-         Positioned( bottom: expanded.value ? 5:255,
-              child: GestureDetector(
-      onTap: (){
-        expanded.value = !expanded.value;
-      },
-      child: Container(
-          height: expanded.value ? 38:27,
-          width: expanded.value ? 1000:300,
-          color: Colors.transparent,
-      )
-              )
-         ),
-
-                Positioned(
-                  bottom: expanded.value ? 45:255,
-                  child: GestureDetector(
-                    onTap: () {
-                      expanded.value = !expanded.value;
-                    },
-                    child: AnimatedRotation(
+                        GestureDetector(
+                          onTap: () {
+                            expanded.value = !expanded.value;
+                          },
+                          child: Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: [
+                              Container(
+                                height: expanded.value ? 55:36,
+                                width: expanded.value ? double.maxFinite:double.maxFinite,
+                                color: Colors.transparent,
+                            ),
+                              AnimatedRotation(
                       turns: expanded.value ? 0.5:0,
-                      alignment: Alignment.bottomCenter,
                       curve: Curves.easeInOut,
-                      duration: const Duration(milliseconds: 400),
+                      alignment: Alignment.center,
+                      duration: const Duration(milliseconds: 200),
                       child: const RotatedBox(
                         quarterTurns: 1,
                         child: Icon(
@@ -176,8 +174,14 @@ class ReadSite extends HookWidget {
                     ),
                       ),
                     ),
+                            ],
+                          ),
+                        )
+
+                    ],
                   ),
-                ),
+              )
+         ),
       ],
      )
     );
