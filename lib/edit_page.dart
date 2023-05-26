@@ -21,6 +21,7 @@ class _EditPageState extends State<EditPage> {
   bool darkTheme = false;
 
   TextEditingController headerController_ = TextEditingController();
+  TextEditingController pageBodyController_ = TextEditingController();
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _EditPageState extends State<EditPage> {
     }
 
     headerController_.text = header;
+    pageBodyController_.text = pageBody;
 
     super.initState();
   }
@@ -71,7 +73,9 @@ class _EditPageState extends State<EditPage> {
               child: TextFormField(
                 controller: headerController_,
                 decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: mainColor),
+                  ),
                 ),
                 style: TextStyle(
                   color: mainColor,
@@ -83,14 +87,18 @@ class _EditPageState extends State<EditPage> {
             const SizedBox(height: 16),
             Container(
               alignment: Alignment.topLeft,
-              child: Text(
-                pageBody,
+              child: TextFormField(
+                maxLines: null,
+                controller: pageBodyController_,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                ),
                 style: TextStyle(
                   color: mainColor,
                   fontSize: 18,
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
