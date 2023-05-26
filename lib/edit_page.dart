@@ -20,9 +20,10 @@ class _EditPageState extends State<EditPage> {
 
   bool darkTheme = false;
 
+  TextEditingController headerController_ = TextEditingController();
+
   @override
   void initState() {
-    super.initState();
     date = DateFormat('dd-MM-yyyy - kk:mm').format(now);
     if (darkTheme) {
       setState(() {
@@ -30,6 +31,10 @@ class _EditPageState extends State<EditPage> {
         mainColor = Colors.white;
       });
     }
+
+    headerController_.text = header;
+
+    super.initState();
   }
 
   @override
@@ -64,6 +69,7 @@ class _EditPageState extends State<EditPage> {
             Container(
               alignment: Alignment.topLeft,
               child: TextFormField(
+                controller: headerController_,
                 decoration: InputDecoration(
                   border: UnderlineInputBorder(),
                 ),
