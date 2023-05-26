@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Arial'),
-      home: SpeechText(),
+      home: EditPage(),
       debugShowCheckedModeBanner: false,
     );
   }

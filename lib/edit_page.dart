@@ -60,11 +60,13 @@ class _EditPageState extends State<EditPage> {
                 style: TextStyle(color: mainColor),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Container(
               alignment: Alignment.topLeft,
-              child: Text(
-                header,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                ),
                 style: TextStyle(
                   color: mainColor,
                   fontWeight: FontWeight.bold,
