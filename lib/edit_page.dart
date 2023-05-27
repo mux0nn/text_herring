@@ -20,12 +20,17 @@ class _EditPageState extends State<EditPage> {
 
   bool darkTheme = false;
 
-  TextEditingController headerController_ = TextEditingController();
-  TextEditingController pageBodyController_ = TextEditingController();
+  final headerController_ = TextEditingController();
+  final pageBodyController_ = TextEditingController();
+
+  void updateDate() {
+    setState(() {
+      date = DateFormat('dd-MM-yyyy - kk:mm').format(now);
+    });
+  }
 
   @override
   void initState() {
-    date = DateFormat('dd-MM-yyyy - kk:mm').format(now);
     if (darkTheme) {
       setState(() {
         bgColor = secondaryColor;
@@ -36,12 +41,22 @@ class _EditPageState extends State<EditPage> {
     headerController_.text = header;
     pageBodyController_.text = pageBody;
 
+    headerController_.addListener(() {
+      header = headerController_.text;
+      updateDate();
+    });
+
+    pageBodyController_.addListener(() {
+      pageBody = pageBodyController_.text;
+      updateDate();
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: bgColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -56,50 +71,52 @@ class _EditPageState extends State<EditPage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-        child: Column(
-          children: [
-            Container(
-              alignment: Alignment.topCenter,
-              child: Text(
-                date,
-                style: TextStyle(color: mainColor),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          child: Column(
+            children: [
+              Container(
+                alignment: Alignment.topCenter,
+                child: Text(
+                  date,
+                  style: TextStyle(color: mainColor),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              alignment: Alignment.topLeft,
-              child: TextFormField(
-                controller: headerController_,
-                decoration: InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: mainColor),
+              const SizedBox(height: 20),
+              Container(
+                alignment: Alignment.topLeft,
+                child: TextFormField(
+                  controller: headerController_,
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: mainColor),
+                    ),
+                  ),
+                  style: TextStyle(
+                    color: mainColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
                   ),
                 ),
-                style: TextStyle(
-                  color: mainColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
+              ),
+              const SizedBox(height: 16),
+              Container(
+                alignment: Alignment.topLeft,
+                child: TextFormField(
+                  maxLines: null,
+                  controller: pageBodyController_,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                  style: TextStyle(
+                    color: mainColor,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              alignment: Alignment.topLeft,
-              child: TextFormField(
-                maxLines: null,
-                controller: pageBodyController_,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                ),
-                style: TextStyle(
-                  color: mainColor,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
