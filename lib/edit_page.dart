@@ -17,11 +17,12 @@ class _EditPageState extends State<EditPage> {
   String date = '';
   Color bgColor = Colors.white;
   Color mainColor = secondaryColor;
-
   bool darkTheme = false;
 
-  final headerController_ = TextEditingController();
-  final pageBodyController_ = TextEditingController();
+  bool _keyboardActive = false;
+
+  final _headerController = TextEditingController();
+  final _pageBodyController = TextEditingController();
 
   void updateDate() {
     setState(() {
@@ -37,18 +38,23 @@ class _EditPageState extends State<EditPage> {
         mainColor = Colors.white;
       });
     }
+    _headerController.text = header;
+    _pageBodyController.text = pageBody;
 
-    headerController_.text = header;
-    pageBodyController_.text = pageBody;
-
-    headerController_.addListener(() {
-      header = headerController_.text;
+    _headerController.addListener(() {
+      header = _headerController.text;
       updateDate();
+      setState(() {
+        _keyboardActive = true;
+      });
     });
 
-    pageBodyController_.addListener(() {
-      pageBody = pageBodyController_.text;
+    _pageBodyController.addListener(() {
+      pageBody = _pageBodyController.text;
       updateDate();
+      setState(() {
+        _keyboardActive = true;
+      });
     });
     super.initState();
   }
@@ -56,7 +62,6 @@ class _EditPageState extends State<EditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: bgColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -64,10 +69,21 @@ class _EditPageState extends State<EditPage> {
         iconTheme: IconThemeData(color: mainColor, size: 32),
         elevation: 0.0,
         leading: Icon(Icons.arrow_back_ios_new_rounded),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: Icon(Icons.menu),
+            padding: const EdgeInsets.only(right: 20.0),
+            child: IconButton(
+              onPressed: () {
+                //hide keyboard
+                FocusManager.instance.primaryFocus?.unfocus();
+                setState(() {
+                  _keyboardActive = false;
+                });
+              },
+              icon: _keyboardActive
+                  ? Icon(Icons.download_done_rounded)
+                  : Icon(Icons.menu),
+            ),
           ),
         ],
       ),
@@ -87,7 +103,7 @@ class _EditPageState extends State<EditPage> {
               Container(
                 alignment: Alignment.topLeft,
                 child: TextFormField(
-                  controller: headerController_,
+                  controller: _headerController,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: mainColor),
@@ -105,7 +121,7 @@ class _EditPageState extends State<EditPage> {
                 alignment: Alignment.topLeft,
                 child: TextFormField(
                   maxLines: null,
-                  controller: pageBodyController_,
+                  controller: _pageBodyController,
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                   ),
