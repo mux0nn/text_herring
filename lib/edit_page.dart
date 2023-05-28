@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text_herring/colors.dart';
 import 'package:intl/intl.dart';
+import 'package:text_herring/utils/user_preferences.dart';
 
 class EditPage extends StatefulWidget {
-  const EditPage({super.key});
+  final id;
+  const EditPage({super.key, required this.id});
 
   @override
   State<EditPage> createState() => _EditPageState();
@@ -24,25 +26,6 @@ class _EditPageState extends State<EditPage> {
   final _headerController = TextEditingController();
   final _pageBodyController = TextEditingController();
 
-  Future<void> _toggleDarkTheme() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      darkTheme = !darkTheme;
-      prefs.setBool('darkTheme', darkTheme);
-    });
-    print(darkTheme);
-    setTheme();
-  }
-
-  Future<void> _loadSharedPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      darkTheme = prefs.getBool('darkTheme') ?? true;
-    });
-    print("Got $darkTheme");
-    setTheme();
-  }
-
   void setTheme() {
     if (darkTheme) {
       setState(() {
@@ -57,33 +40,30 @@ class _EditPageState extends State<EditPage> {
     }
   }
 
-  void updateDate() {
-    setState(() {
-      date = DateFormat('dd-MM-yyyy - kk:mm').format(now);
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    _loadSharedPreferences();
+    print("$darkTheme");
+    darkTheme = UserPreferences().getDarkTheme() ?? false;
+    print("Got $darkTheme");
+    setTheme();
 
     _headerController.text = header;
     _pageBodyController.text = pageBody;
 
     _headerController.addListener(() {
       header = _headerController.text;
-      updateDate();
       setState(() {
         _keyboardActive = true;
+        date = DateFormat('dd-MM-yyyy - kk:mm').format(now);
       });
     });
 
     _pageBodyController.addListener(() {
       pageBody = _pageBodyController.text;
-      updateDate();
       setState(() {
         _keyboardActive = true;
+        date = DateFormat('dd-MM-yyyy - kk:mm').format(now);
       });
     });
     super.initState();
@@ -105,10 +85,12 @@ class _EditPageState extends State<EditPage> {
             child: IconButton(
               onPressed: () {
                 FocusManager.instance.primaryFocus?.unfocus();
-                _toggleDarkTheme();
                 //hide keyboard
                 setState(() {
                   _keyboardActive = false;
+                  darkTheme = !darkTheme;
+                  UserPreferences.setDarkTheme(darkTheme);
+                  setTheme();
                 });
               },
               icon: _keyboardActive
