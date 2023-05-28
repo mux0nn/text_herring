@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text_herring/colors.dart';
 import 'package:intl/intl.dart';
 
@@ -18,11 +19,43 @@ class _EditPageState extends State<EditPage> {
   Color bgColor = Colors.white;
   Color mainColor = secondaryColor;
   bool darkTheme = false;
-
   bool _keyboardActive = false;
 
   final _headerController = TextEditingController();
   final _pageBodyController = TextEditingController();
+
+  Future<void> _toggleDarkTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      darkTheme = !darkTheme;
+      prefs.setBool('darkTheme', darkTheme);
+    });
+    print(darkTheme);
+    setTheme();
+  }
+
+  Future<void> _loadSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      darkTheme = prefs.getBool('darkTheme') ?? true;
+    });
+    print("Got $darkTheme");
+    setTheme();
+  }
+
+  void setTheme() {
+    if (darkTheme) {
+      setState(() {
+        bgColor = secondaryColor;
+        mainColor = Colors.white;
+      });
+    } else {
+      setState(() {
+        bgColor = Colors.white;
+        mainColor = secondaryColor;
+      });
+    }
+  }
 
   void updateDate() {
     setState(() {
@@ -32,12 +65,9 @@ class _EditPageState extends State<EditPage> {
 
   @override
   void initState() {
-    if (darkTheme) {
-      setState(() {
-        bgColor = secondaryColor;
-        mainColor = Colors.white;
-      });
-    }
+    super.initState();
+    _loadSharedPreferences();
+
     _headerController.text = header;
     _pageBodyController.text = pageBody;
 
@@ -74,8 +104,9 @@ class _EditPageState extends State<EditPage> {
             padding: const EdgeInsets.only(right: 20.0),
             child: IconButton(
               onPressed: () {
-                //hide keyboard
                 FocusManager.instance.primaryFocus?.unfocus();
+                _toggleDarkTheme();
+                //hide keyboard
                 setState(() {
                   _keyboardActive = false;
                 });
