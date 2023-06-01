@@ -14,4 +14,14 @@ class UserPreferences {
   bool? getDarkTheme() {
     return _prefs?.getBool('darkTheme');
   }
+
+  //TODO: add JSON convertion
+  static Future setHeader(int id, String val) async {
+    await _prefs?.setString('header', val);
+    print(id);
+  }
+
+  String? getHeader() {
+    return _prefs?.getString('header');
+  }
 }
