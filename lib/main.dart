@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:text_herring/edit_page.dart';
 import 'package:text_herring/speech_text.dart';
+import 'package:text_herring/example_page.dart';
 import 'package:text_herring/utils/user_preferences.dart';
 
 void main() async {
@@ -17,7 +18,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Arial'),
-      home: EditPage(id: 0),
+      home: ExamplePage(),
       debugShowCheckedModeBanner: false,
     );
   }
