@@ -54,14 +54,15 @@ class _EditPageState extends State<EditPage> {
     _headerController.addListener(() {
       header = _headerController.text;
       setState(() {
+        now = DateTime.now();
         _keyboardActive = true;
         date = DateFormat('dd-MM-yyyy - kk:mm').format(now);
       });
     });
-
     _pageBodyController.addListener(() {
       pageBody = _pageBodyController.text;
       setState(() {
+        now = DateTime.now();
         _keyboardActive = true;
         date = DateFormat('dd-MM-yyyy - kk:mm').format(now);
       });
@@ -80,22 +81,23 @@ class _EditPageState extends State<EditPage> {
         elevation: 0.0,
         leading: Icon(Icons.arrow_back_ios_new_rounded),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: IconButton(
-              onPressed: () {
-                FocusManager.instance.primaryFocus?.unfocus();
-                //hide keyboard
-                setState(() {
-                  _keyboardActive = false;
-                  darkTheme = !darkTheme;
-                  UserPreferences.setDarkTheme(darkTheme);
-                  setTheme();
-                });
-              },
-              icon: _keyboardActive
-                  ? Icon(Icons.download_done_rounded)
-                  : Icon(Icons.menu),
+          Visibility(
+            visible: _keyboardActive,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _keyboardActive = false;
+                    //darkTheme = !darkTheme;
+                    //UserPreferences.setDarkTheme(darkTheme);
+                    //setTheme();
+                  });
+                  //hide keyboard
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                icon: Icon(Icons.download_done_rounded),
+              ),
             ),
           ),
         ],
@@ -112,11 +114,14 @@ class _EditPageState extends State<EditPage> {
                   style: TextStyle(color: mainColor),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
+              Icon(Icons.science, size: 50),
+              const SizedBox(height: 10),
               Container(
                 alignment: Alignment.topLeft,
                 child: TextFormField(
                   controller: _headerController,
+                  maxLines: null,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: mainColor),
@@ -133,8 +138,8 @@ class _EditPageState extends State<EditPage> {
               Container(
                 alignment: Alignment.topLeft,
                 child: TextFormField(
-                  maxLines: null,
                   controller: _pageBodyController,
+                  maxLines: null,
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                   ),
