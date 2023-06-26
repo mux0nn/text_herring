@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:text_herring/colors.dart';
+import 'package:text_herring/utils/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:text_herring/utils/user_preferences.dart';
 import 'package:text_herring/views/icon_alert_dialog.dart';
@@ -24,6 +24,12 @@ class _EditPageState extends State<EditPage> {
   bool darkTheme = false;
   bool _keyboardActive = false;
 
+  Map<String, dynamic> projectData = {
+    "date": "",
+    "icon": "",
+    "header": "",
+    "body": "",
+  };
   final _headerController = TextEditingController();
   final _pageBodyController = TextEditingController();
 
@@ -86,6 +92,7 @@ class _EditPageState extends State<EditPage> {
             visible: _keyboardActive,
             child: Padding(
               padding: const EdgeInsets.only(right: 20.0),
+              // Save content button
               child: IconButton(
                 onPressed: () {
                   setState(() {

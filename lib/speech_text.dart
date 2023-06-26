@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
+import 'utils/colors.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class SpeechText extends StatefulWidget {
