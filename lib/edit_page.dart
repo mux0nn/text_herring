@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text_herring/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:text_herring/utils/user_preferences.dart';
+import 'package:text_herring/views/icon_alert_dialog.dart';
 
 class EditPage extends StatefulWidget {
   final id;
@@ -115,7 +116,18 @@ class _EditPageState extends State<EditPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              Icon(Icons.science, size: 50),
+              IconButton(
+                icon: Icon(Icons.science),
+                iconSize: 60,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => IconAlertDialog(
+                      items: [],
+                    ),
+                  );
+                },
+              ),
               const SizedBox(height: 10),
               Container(
                 alignment: Alignment.topLeft,
